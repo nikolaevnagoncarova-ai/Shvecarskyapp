@@ -44,7 +44,6 @@
             transition: background 0.4s, color 0.4s;
         }
 
-        /* Верхняя панель с темами */
         .top-bar {
             position: absolute;
             top: 15px;
@@ -65,7 +64,6 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Основной контейнер профиля */
         .profile-container {
             width: 100%;
             max-width: 400px;
@@ -76,7 +74,6 @@
             z-index: 10;
         }
 
-        /* Аватарка-иконка */
         .avatar-box {
             width: 90px;
             height: 90px;
@@ -90,7 +87,6 @@
             font-size: 40px;
         }
 
-        /* Бейдж */
         .badge {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -125,7 +121,6 @@
             margin-bottom: 24px;
         }
 
-        /* Кнопки меню */
         .menu-btn {
             width: 100%;
             background: var(--card-bg);
@@ -145,14 +140,14 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             transition: transform 0.2s, background 0.2s;
             text-decoration: none;
+            box-sizing: border-box;
         }
 
         .menu-btn:active {
             transform: scale(0.97);
         }
 
-        /* Блок преимуществ (выпадающий) */
-        .advantage-box {
+        .content-box {
             width: 100%;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -165,20 +160,19 @@
             font-size: 14px;
         }
 
-        .advantage-box ul {
+        .content-box ul {
             margin: 0;
             padding-left: 18px;
         }
 
-        .advantage-box li {
+        .content-box li {
             margin-bottom: 10px;
         }
 
-        .advantage-box li:last-child {
+        .content-box li:last-child {
             margin-bottom: 0;
         }
 
-        /* Пасхалка: Летающее НЛО */
         #flying-ufo {
             position: fixed;
             font-size: 32px;
@@ -186,7 +180,6 @@
             z-index: 999;
             user-select: none;
             filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
-            transition: transform 0.1s;
         }
 
         @keyframes flyUFO {
@@ -201,7 +194,6 @@
             animation: flyUFO 18s linear infinite;
         }
 
-        /* Модальное окно промокода */
         .promo-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -251,7 +243,6 @@
 </head>
 <body class="deep-space">
 
-    <!-- Верхняя панель тем -->
     <div class="top-bar">
         <button class="theme-btn" onclick="setTheme('deep-space')">🌌 Космос</button>
         <button class="theme-btn" onclick="setTheme('mars')">🔴 Марс</button>
@@ -259,10 +250,8 @@
     </div>
 
     <div class="profile-container">
-        <!-- Аватарка -->
         <div class="avatar-box">⚡</div>
 
-        <!-- Статус -->
         <div class="badge">
             <div class="badge-dot"></div>
             Разработка ботов
@@ -271,9 +260,15 @@
         <h1>shvecarsky</h1>
         <div class="handle">@shvecarsky</div>
 
-        <!-- Кнопка "Узнать обо мне" (открывает преимущества) -->
-        <button class="mega-btn menu-btn" onclick="toggleAdvantages()">🚀 Узнать обо мне</button>
-        <div id="advantage-content" class="advantage-box" style="display: none;">
+        <!-- Кнопка "Узнать обо мне" -->
+        <button class="menu-btn" onclick="toggleSection('about-content')">🚀 Узнать обо мне</button>
+        <div id="about-content" class="content-box" style="display: none;">
+            Привет! Я разработчик. Создаю качественных ботов, сайты и автоматизации с упором на крутой функционал и современный интерфейс.
+        </div>
+
+        <!-- Кнопка "Почему стоит заказать у меня" -->
+        <button class="menu-btn" onclick="toggleSection('advantages-content')">💎 Почему стоит заказать у меня</button>
+        <div id="advantages-content" class="content-box" style="display: none;">
             <ul>
                 <li><strong>Низкие цены:</strong> Я только начал брать заказы и ставлю цены намного ниже конкурентов, чтобы собрать себе портфолио.</li>
                 <li><strong>Качество:</strong> Пишу чистый, надежный и аккуратный код, уделяя максимум внимания деталям.</li>
@@ -285,10 +280,10 @@
         <a href="https://t.me/shvecarsky" target="_blank" class="menu-btn">💬 Написать мне</a>
 
         <!-- Кнопка Интересные факты -->
-        <button class="mega-btn menu-btn" onclick="alert('Скоро здесь появятся крутые IT-факты!')">✨ Интересные факты об IT</button>
+        <button class="menu-btn" onclick="alert('Скоро здесь появятся крутые IT-факты!')">✨ Интересные факты об IT</button>
     </div>
 
-    <!-- Пасхалка: НЛО, летающее по сайту -->
+    <!-- Пасхалка: НЛО -->
     <div id="flying-ufo" class="flying" onclick="catchUFO()" title="Поймай НЛО!">🛸</div>
 
     <!-- Окно промокода -->
@@ -302,8 +297,14 @@
     </div>
 
     <script>
-        function toggleAdvantages() {
-            const box = document.getElementById('advantage-content');
+        function toggleSection(id) {
+            const box = document.getElementById(id);
+            // Закрываем другую вкладку, если она открыта, чтобы не накладывались
+            ['about-content', 'advantages-content'].forEach(item => {
+                if (item !== id) {
+                    document.getElementById(item).style.display = 'none';
+                }
+            });
             box.style.display = box.style.display === 'none' ? 'block' : 'none';
         }
 
@@ -313,7 +314,6 @@
 
         function catchUFO() {
             const ufo = document.getElementById('flying-ufo');
-            // Останавливаем полет при клике
             ufo.style.animationPlayState = 'paused';
             
             const codes = ["скидка10", "код01", "старт5", "луна24", "буст10"];
@@ -325,7 +325,6 @@
 
         function closePromo() {
             document.getElementById('promo-modal').style.display = 'none';
-            // Возобновляем полет НЛО
             const ufo = document.getElementById('flying-ufo');
             ufo.style.animationPlayState = 'running';
         }
