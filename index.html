@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shvecarsky | Bot Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05020a;
+            --accent-purple: #9d4edd;
+            --glow-purple: #7b2cbf;
+            --neon-pink: #f72585;
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --glass-bg: rgba(25a, 15, 45, 0.4);
+            --glass-border: rgba(157, 78, 221, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* КОСМИЧЕСКИЙ БЭКГРАУНД */
+        #canvas-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: floatOrb 10s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 350px;
+            height: 350px;
+            background: var(--glow-purple);
+            top: -50px;
+            left: -50px;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--neon-pink);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
+        }
+
+        /* КОНТЕЙНЕР СТРАНИЦЫ */
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 40px 20px 80px 20px;
+        }
+
+        /* ШАПКА / ПРОФИЛЬ */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px auto;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--neon-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 800;
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid var(--glass-border);
+            font-size: 13px;
+            color: #d8b4fe;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 30%, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* ГЛАВНЫЕ КНОПКИ */
+        .main-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 24px;
+            border-radius: 18px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-main);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(247, 37, 133, 0.3));
+            border-color: rgba(247, 37, 133, 0.4);
+            box-shadow: 0 10px 30px rgba(123, 44, 191, 0.3);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 15px 35px rgba(157, 78, 221, 0.4);
+        }
+
+        /* СЕКЦИИ С ИНФОРМАЦИЕЙ (ПЛАВНОЕ СНРЫТИЕ/ПОКАЗ) */
+        .info-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 28px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 24px;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .info-card.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .info-card h2 {
+            font-size: 22px;
+            color: #e9d5ff;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* ФАКТЫ О ПРОГРАММИРОВАНИИ */
+        .fact-box {
+            position: relative;
+            background: rgba(10, 5, 20, 0.6);
+            border: 1px dashed var(--accent-purple);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 15px;
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .fact-text {
+            font-size: 15px;
+            color: #f3e8ff;
+            line-height: 1.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-next-fact {
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            background: rgba(157, 78, 221, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #d8b4fe;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-next-fact:hover {
+            background: var(--accent-purple);
+            color: #fff;
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-stars"></canvas>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="container">
+        <!-- АВАТАР И ТИТУЛ -->
+        <div class="profile-header">
+            <div class="avatar-wrapper">
+                <div class="avatar">⚡️</div>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span> Открыт к новым проектам
+            </div>
+            <h1>shvecarsky</h1>
+            <div class="subtitle">Разработчик высоконагруженных Telegram-ботов</div>
+        </div>
+
+        <!-- ГЛАВНЫЕ КНОПКИ -->
+        <div class="main-buttons">
+            <button class="btn btn-primary" onclick="toggleSection('about')">
+                <span>🚀 Узнать обо мне</span>
+            </button>
+            <a href="https://t.me/shvecarsky" target="_blank" class="btn">
+                <span>💬 Написать мне (@shvecarsky)</span>
+            </a>
+            <button class="btn" onclick="toggleSection('facts')">
+                <span>✨ Интересные факты о IT</span>
+            </button>
+        </div>
+
+        <!-- БЛОК "ОБО МНЕ" -->
+        <div id="about" class="info-card">
+            <h2>💻 О разработчике</h2>
+            <p>
+                Привет! Я специализируюсь на архитектуре и создании функциональных Telegram-ботов любого уровня сложности — от компактных магазинов цифровых товаров до сложных сервисов с автовыдачей, интеграциями баз данных SQLite/PostgreSQL, приема платежей и подключения Mini Apps.
+            </p>
+        </div>
+
+        <!-- БЛОК "ФАКТЫ" -->
+        <div id="facts" class="info-card">
+            <h2>🌌 Космические IT-факты</h2>
+            <div class="fact-box">
+                <div id="factDisplay" class="fact-text">Нажми кнопку ниже, чтобы узнать потрясающий факт!</div>
+            </div>
+            <button class="btn-next-fact" onclick="generateFact()">⚡️ Сгенерировать новый факт</button>
+        </div>
+    </div>
+
+    <script>
+        // АНИМАЦИЯ ЗВЕЗДНОГО НЕБА
+        const canvas = document.getElementById('canvas-stars');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const stars = Array.from({ length: 120 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5 + 0.1,
+            opacity: Math.random()
+        }));
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                star.y -= star.speed;
+                if (star.y < 0) {
+                    star.y = canvas.height;
+                    star.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+
+        // ПЕРЕКЛЮЧЕНИЕ СЕКЦИЙ
+        function toggleSection(id) {
+            const card = document.getElementById(id);
+            const isActive = card.classList.contains('active');
+
+            document.querySelectorAll('.info-card').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            if (!isActive) {
+                card.classList.add('active');
+                if (id === 'facts') generateFact();
+            }
+        }
+
+        // ГЕНЕРАТОР ФАКТОВ ПО ПРОГРАММИРОВАНИЮ
+        const factsList = [
+            "Первым программистом в истории была женщина — Ада Лавлейс. Она написала алгоритм для разностной машины в 1843 году.",
+            "Термин «компьютерный баг» появился, когда реальный мотылек (bug) застрял в реле компьютера Mark II в 1947 году.",
+            "Первая компьютерная игра «Spacewar!» была создана в 1962 году и не принесла авторам ни одного цента.",
+            "Язык программирования Python назван не в честь рептилии, а в честь британского комедийного шоу «Летающий цирк Монти Пайтона».",
+            "Более 98% всех существующих веб-сайтов в мире используют JavaScript на стороне клиента.",
+            "В коде Apollo 11, посадившего людей на Луну, содержались шутки и комментарии, включая фразы «BURN, BABY, BURN»."
+        ];
+
+        function generateFact() {
+            const display = document.getElementById('factDisplay');
+            display.style.opacity = '0';
+            setTimeout(() => {
+                const randomFact = factsList[Math.floor(Math.random() * factsList.length)];
+                display.innerText = randomFact;
+                display.style.opacity = '1';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
