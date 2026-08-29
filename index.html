@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #05020a; /* Почти черный */
-            --accent-purple: #9d4edd; /* Яркий фиолетовый */
-            --glow-purple: #7b2cbf; /* Свечение */
-            --neon-pink: #f72585; /* Розовый акцент */
+            --bg-color: #05020a;
+            --accent-purple: #9d4edd;
+            --glow-purple: #7b2cbf;
+            --neon-pink: #f72585;
             --text-main: #ffffff;
             --text-muted: #a0a0b0;
             --glass-bg: rgba(25, 15, 45, 0.4);
@@ -19,26 +19,21 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-
         body { background-color: var(--bg-color); color: var(--text-main); overflow: hidden; min-height: 100vh; position: relative; }
 
-        /* КОСМИЧЕСКИЙ ЗАДНИЙ ФОН */
         #canvas-stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .glow-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.5; animation: floatOrb 10s infinite alternate ease-in-out; }
         .orb-1 { width: 350px; height: 350px; background: var(--glow-purple); top: -50px; left: -50px; }
         .orb-2 { width: 300px; height: 300px; background: var(--neon-pink); bottom: -50px; right: -50px; animation-delay: -5s; }
         @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.2); } }
 
-        /* ГЛАВНЫЙ КОНТЕЙНЕР (С ВИЗУАЛЬНЫМ ПЛАВНЫМ ПЕРЕКЛЮЧЕНИЕМ) */
         .container {
             max-width: 600px; margin: 0 auto; padding: 20px 20px 80px 20px;
             display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;
-            opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 1; transition: opacity 0.4s ease, transform 0.4s ease;
         }
-
         .container.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; }
 
-        /* ШАПКА / ПРОФИЛЬ */
         .profile-header { text-align: center; margin-bottom: 30px; animation: fadeInDown 0.8s ease-out; }
         .avatar-wrapper { position: relative; width: 100px; height: 100px; margin: 0 auto 15px auto; }
         .avatar {
@@ -52,9 +47,7 @@
         .status-dot { width: 8px; height: 8px; background-color: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; }
         h1 { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #ffffff 30%, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
         .username { color: var(--accent-purple); font-weight: 600; font-size: 16px; margin-bottom: 15px; display: block; }
-        .subtitle { color: var(--text-muted); font-size: 15px; max-width: 300px; margin: 0 auto; line-height: 1.5; }
 
-        /* ГЛАВНЫЕ КНОПКИ (БОЛЬШИЕ) */
         .main-buttons { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 350px; animation: fadeInUp 0.8s ease-out 0.2s backwards; }
         .btn {
             display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -64,25 +57,27 @@
         }
         .btn-primary { background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(247, 37, 133, 0.3)); border-color: rgba(247, 37, 133, 0.4); box-shadow: 0 10px 30px rgba(123, 44, 191, 0.3); }
         .btn:active { transform: scale(0.96); }
-        .btn:hover { transform: translateY(-3px); border-color: var(--accent-purple); box-shadow: 0 15px 35px rgba(157, 78, 221, 0.4); }
 
-        /* ВКЛАДКА ФАКТЫ */
-        #factsPage { display: none; padding: 40px 20px; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
-        #factsPage.active { display: flex; animation: fadeInFact 0.5s ease; }
+        /* ОКНА ВЛАДОК (ОБО МНЕ / ФАКТЫ) */
+        .sub-page { display: none; padding: 40px 20px; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+        .sub-page.active { display: flex; animation: fadeInFact 0.5s ease; }
         
-        .fact-card {
-            background: rgba(10, 5, 20, 0.6); border: 1px solid var(--glass-border); border-radius: 24px;
+        .content-card {
+            background: rgba(10, 5, 20, 0.7); border: 1px solid var(--glass-border); border-radius: 24px;
             padding: 30px; text-align: center; backdrop-filter: blur(20px);
             transform: scale(0.9); opacity: 0; transition: all 0.5s ease;
             width: 100%; max-width: 400px;
         }
-        #factsPage.active .fact-card { transform: scale(1); opacity: 1; }
+        .sub-page.active .content-card { transform: scale(1); opacity: 1; }
 
-        .fact-icon { font-size: 48px; margin-bottom: 20px; display: block; filter: drop-shadow(0 0 15px var(--accent-purple)); }
-        .fact-title { font-size: 20px; color: #e9d5ff; margin-bottom: 15px; font-weight: 700; }
-        .fact-text { font-size: 16px; color: var(--text-muted); line-height: 1.7; transition: opacity 0.3s ease; }
-        .btn-next { margin-top: 25px; width: 100%; padding: 15px; background: rgba(157, 78, 221, 0.2); border: 1px solid var(--glass-border); border-radius: 14px; color: #d8b4fe; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-next:hover { background: var(--accent-purple); color: #fff; }
+        .card-icon { font-size: 48px; margin-bottom: 15px; display: block; filter: drop-shadow(0 0 15px var(--accent-purple)); }
+        .card-title { font-size: 22px; color: #e9d5ff; margin-bottom: 15px; font-weight: 800; }
+        .card-text { font-size: 15px; color: var(--text-muted); line-height: 1.7; text-align: left; }
+        .card-text ul { list-style: none; padding: 0; margin-top: 10px; }
+        .card-text li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+        .btn-back { margin-top: 25px; width: 100%; padding: 15px; background: rgba(157, 78, 221, 0.2); border: 1px solid var(--glass-border); border-radius: 14px; color: #d8b4fe; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-back:hover { background: var(--accent-purple); color: #fff; }
 
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -98,54 +93,70 @@
     <div class="container" id="mainPage">
         <div class="profile-header">
             <div class="avatar-wrapper"><div class="avatar">⚡️</div></div>
-            <div class="status-badge"><span class="status-dot"></span> Разработчик ботов</div>
+            <div class="status-badge"><span class="status-dot"></span> Разработка ботов</div>
             <h1>shvecarsky</h1>
             <span class="username">@shvecarsky</span>
-            <div class="subtitle">Создание высоконагруженных Telegram-ботов и Mini Apps любой сложности.</div>
         </div>
 
         <div class="main-buttons">
-            <a href="https://t.me/shvecarsky" target="_blank" class="btn btn-primary"><span>💬 Написать мне</span></a>
-            <button class="btn" onclick="openFacts()"><span>✨ Интересные факты об IT</span></button>
+            <button class="btn btn-primary" onclick="openPage('aboutPage')"><span>🚀 Узнать обо мне</span></button>
+            <a href="https://t.me/shvecarsky" target="_blank" class="btn"><span>💬 Написать мне</span></a>
+            <button class="btn" onclick="openPage('factsPage')"><span>✨ Интересные факты об IT</span></button>
         </div>
     </div>
 
-    <div id="factsPage">
-        <div class="fact-card">
-            <span class="fact-icon">🌌</span>
-            <div class="fact-title">А вы знали?</div>
-            <div id="factDisplay" class="fact-text">Нажмите кнопку, чтобы загрузить потрясающий факт из мира программирования!</div>
-            <button class="btn-next" onclick="generateFact()">⚡️ Следующий факт</button>
+    <div id="aboutPage" class="sub-page">
+        <div class="content-card">
+            <span class="card-icon">👨‍💻</span>
+            <div class="card-title">О разработчике</div>
+            <div class="card-text">
+                Привет! Я **shvecarsky** — создаю высоконагруженных Telegram-ботов и Mini Apps под ключ.
+                <ul>
+                    <li>⚡️ Разработка ботов любой сложности</li>
+                    <li>💳 Интеграция эквайринга и автооплат</li>
+                    <li>📊 Базы данных, админ-панели и рассылки</li>
+                    <li>🌐 Разработка космических Mini Apps</li>
+                </ul>
+            </div>
+            <button class="btn-back" onclick="closePage('aboutPage')">⬅️ Назад в меню</button>
+        </div>
+    </div>
+
+    <div id="factsPage" class="sub-page">
+        <div class="content-card">
+            <span class="card-icon">🌌</span>
+            <div class="card-title">А вы знали?</div>
+            <div id="factDisplay" class="card-text" style="text-align: center;">Нажмите кнопку ниже!</div>
+            <button class="btn-back" onclick="generateFact()" style="margin-top: 15px; background: var(--accent-purple); color: #fff;">⚡️ Следующий факт</button>
+            <button class="btn-back" onclick="closePage('factsPage')">⬅️ Назад в меню</button>
         </div>
     </div>
 
     <script>
-        // ИНИЦИАЛИЗАЦИЯ TELEGRAM MINI APP
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
-        
-        // Кнопка Назад в Telegram
-        tg.BackButton.onClick(() => closeFacts());
 
-        function openFacts() {
+        function openPage(pageId) {
             document.getElementById('mainPage').classList.add('hidden');
             setTimeout(() => {
-                document.getElementById('factsPage').classList.add('active');
+                document.getElementById(pageId).classList.add('active');
                 tg.BackButton.show();
-                generateFact();
+                if (pageId === 'factsPage') generateFact();
             }, 300);
+            
+            tg.BackButton.onClick(() => closePage(pageId));
         }
 
-        function closeFacts() {
-            document.getElementById('factsPage').classList.remove('active');
+        function closePage(pageId) {
+            document.getElementById(pageId).classList.remove('active');
             tg.BackButton.hide();
             setTimeout(() => {
                 document.getElementById('mainPage').classList.remove('hidden');
             }, 300);
         }
 
-        // АНИМАЦИЯ ЗВЕЗДНОГО НЕБА
+        // ЗВЕЗДНОЕ НЕБО
         const canvas = document.getElementById('canvas-stars');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; stars = generateStars(); }
@@ -175,21 +186,19 @@
         }
         animateStars();
 
-        // ГЕНЕРАТОР ФАКТОВ С АНИМАЦИЕЙ
         const factsList = [
-            "Первым программистом в истории была женщина — Ада Лавлейс (1843 год).",
-            "Термин «баг» появился из-за реального мотылька, застрявшего в реле компьютера в 1947 году.",
-            "Язык Python назван в честь комедийного шоу «Летающий цирк Монти Пайтона».",
-            "Более 98% всех веб-сайтов в мире используют JavaScript.",
-            "В коде Apollo 11 содержались шутки разработчиков, включая фразу «BURN, BABY, BURN»."
+            "Первым программистом в истории была Ада Лавлейс (1843 год).",
+            "Термин «баг» появился из-за мотылька, застрявшего в компьютере в 1947 году.",
+            "Язык Python назван в честь шоу «Летающий цирк Монти Пайтона».",
+            "Более 98% веб-сайтов в мире используют JavaScript.",
+            "В коде Apollo 11 содержались шутливые комментарии «BURN, BABY, BURN»."
         ];
 
         function generateFact() {
             const display = document.getElementById('factDisplay');
             display.style.opacity = '0';
             setTimeout(() => {
-                const randomFact = factsList[Math.floor(Math.random() * factsList.length)];
-                display.innerText = randomFact;
+                display.innerText = factsList[Math.floor(Math.random() * factsList.length)];
                 display.style.opacity = '1';
             }, 300);
         }
