@@ -3,248 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Швейцарская разработка</title>
+    <title>shvecarsky</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-color: #f8fafc;
-            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            --button-hover: #2563eb;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --bg-gradient: radial-gradient(circle at 50% 20%, #2e1065 0%, #0f0728 50%, #030014 100%);
+            --card-bg: rgba(30, 20, 60, 0.6);
+            --card-border: rgba(168, 85, 247, 0.3);
+            --text-color: #ffffff;
+            --accent-glow: rgba(236, 72, 153, 0.4);
         }
 
         body.mars {
-            --bg-color: #1a0f0a;
-            --card-bg: rgba(59, 30, 20, 0.7);
+            --bg-gradient: radial-gradient(circle at 50% 20%, #451a03 0%, #1c0a03 50%, #0a0301 100%);
+            --card-bg: rgba(60, 25, 15, 0.6);
+            --card-border: rgba(249, 115, 22, 0.3);
             --text-color: #ffe3d1;
-            --accent-gradient: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
-            --button-hover: #c2410c;
-            --border-color: rgba(255, 150, 100, 0.2);
+            --accent-glow: rgba(249, 115, 22, 0.4);
         }
 
         body.cyberpunk {
-            --bg-color: #050b05;
-            --card-bg: rgba(10, 30, 15, 0.8);
-            --text-color: #33ff66;
-            --accent-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-            --button-hover: #059669;
-            --border-color: rgba(51, 255, 102, 0.3);
+            --bg-gradient: radial-gradient(circle at 50% 20%, #022c22 0%, #021a14 50%, #010d0a 100%);
+            --card-bg: rgba(10, 40, 30, 0.7);
+            --card-border: rgba(52, 211, 153, 0.3);
+            --text-color: #34d399;
+            --accent-glow: rgba(52, 211, 153, 0.4);
         }
 
         body {
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 16px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 22px;
-            margin-bottom: 4px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-bottom: 16px;
-        }
-
-        .theme-switcher {
+            padding: 20px;
+            min-height: 100vh;
             display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* Верхняя панель с темами */
+        .top-bar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+            z-index: 100;
         }
 
         .theme-btn {
-            flex: 1;
-            padding: 8px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
             background: var(--card-bg);
+            border: 1px solid var(--card-border);
             color: var(--text-color);
-            font-size: 13px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
             cursor: pointer;
-            font-weight: 500;
+            backdrop-filter: blur(5px);
         }
 
-        .mega-btn {
+        /* Основной контейнер профиля */
+        .profile-container {
             width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-            border-radius: 12px;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            z-index: 10;
+        }
+
+        /* Аватарка-иконка */
+        .avatar-box {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px var(--accent-glow);
+            margin-bottom: 16px;
+            font-size: 40px;
+        }
+
+        /* Бейдж */
+        .badge {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin: 0 0 4px 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .handle {
+            font-size: 14px;
+            opacity: 0.6;
+            margin-bottom: 24px;
+        }
+
+        /* Кнопки меню */
+        .menu-btn {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
             margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
         }
 
-        .mega-btn:active {
-            transform: scale(0.98);
+        .menu-btn:active {
+            transform: scale(0.97);
         }
 
-        .advantage-content {
+        /* Блок преимуществ (выпадающий) */
+        .advantage-box {
+            width: 100%;
             background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
             padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
             line-height: 1.5;
-            border: 1px solid var(--border-color);
             font-size: 14px;
         }
 
-        .advantage-content ul {
+        .advantage-box ul {
             margin: 0;
             padding-left: 18px;
         }
 
-        .advantage-content li {
+        .advantage-box li {
             margin-bottom: 10px;
         }
 
-        .advantage-content li:last-child {
+        .advantage-box li:last-child {
             margin-bottom: 0;
         }
 
-        /* Пасхалка */
-        #secret-comet {
+        /* Пасхалка: Летающее НЛО */
+        #flying-ufo {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-size: 28px;
+            font-size: 32px;
             cursor: pointer;
-            animation: float 3s ease-in-out infinite;
             z-index: 999;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6));
+            user-select: none;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
+            transition: transform 0.1s;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        @keyframes flyUFO {
+            0% { top: 10vh; left: -50px; }
+            25% { top: 70vh; left: 80vw; transform: scaleX(1); }
+            50% { top: 30vh; left: 40vw; transform: scaleX(-1); }
+            75% { top: 85vh; left: 10vw; transform: scaleX(-1); }
+            100% { top: 10vh; left: 105vw; transform: scaleX(1); }
         }
 
+        .flying {
+            animation: flyUFO 18s linear infinite;
+        }
+
+        /* Модальное окно промокода */
         .promo-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
         }
 
-        .promo-box {
-            background: #1e293b;
+        .promo-content {
+            background: #1e1b4b;
+            border: 2px solid #a855f7;
             padding: 24px;
-            border-radius: 16px;
+            border-radius: 20px;
             text-align: center;
-            color: #ffffff;
-            border: 2px solid #3b82f6;
             width: 80%;
             max-width: 280px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: #ffffff;
         }
 
-        .promo-box h3 {
-            margin-top: 0;
-            font-size: 18px;
-        }
-
-        .promo-box h2 {
-            color: #38bdf8;
-            margin: 12px 0;
-            font-size: 24px;
-            letter-spacing: 1px;
-            background: rgba(56, 189, 248, 0.1);
-            padding: 8px;
-            border-radius: 8px;
-        }
-
-        .promo-box button {
-            width: 100%;
-            padding: 10px;
-            background: #3b82f6;
-            border: none;
-            border-radius: 8px;
-            color: white;
+        .promo-content h3 { margin-top: 0; color: #f472b6; }
+        .promo-code {
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            font-size: 26px;
             font-weight: bold;
-            font-size: 14px;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 15px 0;
+            letter-spacing: 2px;
+        }
+
+        .promo-content button {
+            background: #a855f7;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 8px;
         }
     </style>
 </head>
 <body class="deep-space">
 
-    <div class="container">
-        <h1>Швейцарская разработка</h1>
-        <div class="subtitle">Добро пожаловать в моё космическое приложение!</div>
+    <!-- Верхняя панель тем -->
+    <div class="top-bar">
+        <button class="theme-btn" onclick="setTheme('deep-space')">🌌 Космос</button>
+        <button class="theme-btn" onclick="setTheme('mars')">🔴 Марс</button>
+        <button class="theme-btn" onclick="setTheme('cyberpunk')">🟢 Кибер</button>
+    </div>
 
-        <!-- Панель тем -->
-        <div class="theme-switcher">
-            <button class="theme-btn" onclick="setTheme('deep-space')">🌌 Космос</button>
-            <button class="theme-btn" onclick="setTheme('mars')">🔴 Марс</button>
-            <button class="theme-btn" onclick="setTheme('cyberpunk')">🟢 Кибер</button>
+    <div class="profile-container">
+        <!-- Аватарка -->
+        <div class="avatar-box">⚡</div>
+
+        <!-- Статус -->
+        <div class="badge">
+            <div class="badge-dot"></div>
+            Разработка ботов
         </div>
 
-        <!-- Блок преимуществ -->
-        <button class="mega-btn" onclick="toggleAdvantages()">Почему стоит заказать у меня? 🚀</button>
-        <div id="advantage-content" class="advantage-content" style="display: none;">
+        <h1>shvecarsky</h1>
+        <div class="handle">@shvecarsky</div>
+
+        <!-- Кнопка "Узнать обо мне" (открывает преимущества) -->
+        <button class="mega-btn menu-btn" onclick="toggleAdvantages()">🚀 Узнать обо мне</button>
+        <div id="advantage-content" class="advantage-box" style="display: none;">
             <ul>
-                <li><strong>Антикризисные цены:</strong> Я только начал брать заказы и ставлю цены намного ниже конкурентов, чтобы собрать сильное портфолио.</li>
-                <li><strong>Инженерное качество:</strong> Создаю чистый, адаптивный и надежный код, уделяя внимание каждой детали интерфейса.</li>
+                <li><strong>Низкие цены:</strong> Я только начал брать заказы и ставлю цены намного ниже конкурентов, чтобы собрать себе портфолио.</li>
+                <li><strong>Качество:</strong> Пишу чистый, надежный и аккуратный код, уделяя максимум внимания деталям.</li>
                 <li><strong>Быстрое выполнение:</strong> Делаю всё оперативно, но без фанатизма и спешки в ущерб качеству.</li>
             </ul>
         </div>
+
+        <!-- Кнопка Написать мне -->
+        <a href="https://t.me/shvecarsky" target="_blank" class="menu-btn">💬 Написать мне</a>
+
+        <!-- Кнопка Интересные факты -->
+        <button class="mega-btn menu-btn" onclick="alert('Скоро здесь появятся крутые IT-факты!')">✨ Интересные факты об IT</button>
     </div>
 
-    <!-- Пасхалка: Комета -->
-    <div id="secret-comet" onclick="foundEasterEgg()" title="Поймай комету!">☄️</div>
-    
-    <!-- Модальное окно промокода -->
+    <!-- Пасхалка: НЛО, летающее по сайту -->
+    <div id="flying-ufo" class="flying" onclick="catchUFO()" title="Поймай НЛО!">🛸</div>
+
+    <!-- Окно промокода -->
     <div id="promo-modal" class="promo-modal" style="display: none;">
-        <div class="promo-box">
-            <h3>🎉 Пасхалка найдена!</h3>
-            <p style="color: #94a3b8; font-size: 13px; margin: 8px 0;">Ваша скидка 10% по простому коду:</p>
-            <h2 id="promo-code-text"></h2>
+        <div class="promo-content">
+            <h3>🛸 НЛО сбито!</h3>
+            <p style="font-size: 13px; opacity: 0.8;">Ваш секретный код на скидку 10%:</p>
+            <div class="promo-code" id="ufo-code"></div>
             <button onclick="closePromo()">Забрать</button>
         </div>
     </div>
 
     <script>
         function toggleAdvantages() {
-            const content = document.getElementById('advantage-content');
-            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            const box = document.getElementById('advantage-content');
+            box.style.display = box.style.display === 'none' ? 'block' : 'none';
         }
 
         function setTheme(themeName) {
             document.body.className = themeName;
         }
 
-        function foundEasterEgg() {
-            const simpleCodes = ["скидка10", "код01", "старт5", "луна24", "буст10", "тест05", "промо10"];
-            const randomCode = simpleCodes[Math.floor(Math.random() * simpleCodes.length)];
+        function catchUFO() {
+            const ufo = document.getElementById('flying-ufo');
+            // Останавливаем полет при клике
+            ufo.style.animationPlayState = 'paused';
             
-            document.getElementById('promo-code-text').innerText = randomCode;
+            const codes = ["скидка10", "код01", "старт5", "луна24", "буст10"];
+            const code = codes[Math.floor(Math.random() * codes.length)];
+            
+            document.getElementById('ufo-code').innerText = code;
             document.getElementById('promo-modal').style.display = 'flex';
         }
 
         function closePromo() {
             document.getElementById('promo-modal').style.display = 'none';
+            // Возобновляем полет НЛО
+            const ufo = document.getElementById('flying-ufo');
+            ufo.style.animationPlayState = 'running';
         }
     </script>
 </body>
