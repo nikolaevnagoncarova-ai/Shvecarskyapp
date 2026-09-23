@@ -4,40 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>shvecarsky - Портфолио</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Подключение шрифтов Unbounded (для дерзких заголовков в стиле баннеров) и Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            /* Тема: Космос (по умолчанию) */
-            --bg-grad-1: #09090e;
-            --bg-grad-2: #161528;
-            --accent: #8b5cf6;
-            --accent-glow: rgba(139, 92, 246, 0.5);
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --card-border: rgba(255, 255, 255, 0.08);
+            /* Тема: Космос / Deep Space Neon (по умолчанию) */
+            --bg-main: #040814;
+            --bg-grad-1: #030712;
+            --bg-grad-2: #0b1536;
+            --accent: #00d2ff;
+            --accent-glow: rgba(0, 210, 255, 0.45);
+            --accent-secondary: #0055ff;
+            --card-bg: rgba(10, 20, 42, 0.55);
+            --card-border: rgba(0, 210, 255, 0.25);
+            --card-border-hover: rgba(0, 210, 255, 0.6);
             --text-main: #ffffff;
-            --text-muted: #94a3b8;
+            --text-muted: #8ea5c8;
+            --grid-color: rgba(0, 162, 255, 0.05);
         }
 
         body.mars {
-            --bg-grad-1: #1a0b02;
-            --bg-grad-2: #2d1305;
-            --accent: #f97316;
-            --accent-glow: rgba(249, 115, 22, 0.5);
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(249, 115, 22, 0.2);
-            --text-main: #fff7ed;
-            --text-muted: #fdba74;
+            --bg-main: #0f0503;
+            --bg-grad-1: #150604;
+            --bg-grad-2: #2d0d05;
+            --accent: #ff5500;
+            --accent-glow: rgba(255, 85, 0, 0.45);
+            --accent-secondary: #ff2a00;
+            --card-bg: rgba(35, 12, 7, 0.55);
+            --card-border: rgba(255, 85, 0, 0.25);
+            --card-border-hover: rgba(255, 85, 0, 0.6);
+            --text-main: #fff5f2;
+            --text-muted: #e2a091;
+            --grid-color: rgba(255, 85, 0, 0.05);
         }
 
         body.cyberpunk {
-            --bg-grad-1: #021a14;
-            --bg-grad-2: #012a1f;
-            --accent: #10b981;
-            --accent-glow: rgba(16, 185, 129, 0.5);
-            --card-bg: rgba(0, 255, 128, 0.02);
-            --card-border: rgba(16, 185, 129, 0.3);
-            --text-main: #ecfdf5;
-            --text-muted: #6ee7b7;
+            --bg-main: #020f0a;
+            --bg-grad-1: #02120c;
+            --bg-grad-2: #052c1e;
+            --accent: #00ff9d;
+            --accent-glow: rgba(0, 255, 157, 0.45);
+            --accent-secondary: #00b36b;
+            --card-bg: rgba(4, 32, 22, 0.55);
+            --card-border: rgba(0, 255, 157, 0.25);
+            --card-border-hover: rgba(0, 255, 157, 0.6);
+            --text-main: #f0fff8;
+            --text-muted: #83cbb0;
+            --grid-color: rgba(0, 255, 157, 0.05);
         }
 
         * {
@@ -46,12 +62,17 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--bg-grad-1), var(--bg-grad-2));
+            background-color: var(--bg-main);
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px),
+                radial-gradient(circle at 50% 20%, var(--bg-grad-2) 0%, var(--bg-grad-1) 100%);
+            background-size: 30px 30px, 30px 30px, 100% 100%;
             background-attachment: fixed;
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 24px 16px 40px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -60,9 +81,9 @@
             transition: background 0.6s ease, color 0.6s ease;
         }
 
-        /* Анимация появления контента */
+        /* Анимация появления */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -74,36 +95,38 @@
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
 
-        /* Панель тем (стеклянная) */
+        /* Переключатель тем */
         .top-bar {
             display: flex;
-            gap: 8px;
-            background: var(--card-bg);
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--card-border);
-            padding: 6px;
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            margin-bottom: 30px;
+            padding: 5px;
+            border-radius: 30px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            margin-bottom: 28px;
             z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .theme-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 8px 12px;
-            border-radius: 14px;
+            padding: 8px 14px;
+            border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .theme-btn.active {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 0 15px var(--accent-glow);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         .profile-container {
@@ -115,189 +138,233 @@
             z-index: 10;
         }
 
-        /* Аватарка с пульсирующим свечением */
+        /* Аватарка с неоновой нео-рамкой */
         .avatar-box {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--accent) 0%, transparent 100%);
-            border-radius: 50%;
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 45px;
-            margin-bottom: 16px;
+            font-size: 42px;
+            margin-bottom: 18px;
             position: relative;
-            box-shadow: 0 0 30px var(--accent-glow);
-            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 35px var(--accent-glow), inset 0 0 15px var(--accent-glow);
+            border: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
         }
 
         .avatar-box::after {
             content: '';
             position: absolute;
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--accent-glow);
-            animation: pulse 2s infinite;
+            inset: -6px;
+            border-radius: 32px;
+            border: 1px dashed var(--accent);
+            opacity: 0.5;
+            animation: rotateGlow 12s linear infinite;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.3); opacity: 0; }
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Статус */
+        /* Статус плашка */
         .badge {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--card-border);
             padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
+            border-radius: 100px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 16px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .badge-dot {
-            width: 8px; height: 8px;
-            background-color: #22c55e;
+            width: 8px; 
+            height: 8px;
+            background-color: #00ff66;
             border-radius: 50%;
-            box-shadow: 0 0 10px #22c55e;
+            box-shadow: 0 0 10px #00ff66;
             animation: blink 2s infinite;
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
         }
 
+        /* Неоновая типографика в стиле баннера */
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 32px;
             margin: 0 0 4px 0;
-            font-weight: 800;
+            font-weight: 900;
+            text-transform: uppercase;
             letter-spacing: -0.5px;
+            color: #ffffff;
+            text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+            text-align: center;
         }
 
         .handle {
-            font-size: 15px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
             color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
-        /* Премиальные кнопки-меню */
+        .slogan {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            font-style: italic;
+            opacity: 0.85;
+            letter-spacing: 0.2px;
+        }
+
+        /* Стильные стеклянные карточки-кнопки */
         .menu-btn {
             width: 100%;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             color: var(--text-main);
-            padding: 18px 20px;
-            border-radius: 16px;
-            font-size: 16px;
+            padding: 16px 20px;
+            border-radius: 20px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 12px;
+            gap: 14px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             text-decoration: none;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-btn:hover, .menu-btn:active {
+            border-color: var(--card-border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .menu-btn:active {
-            transform: scale(0.96);
-            background: rgba(255,255,255,0.08);
+            transform: translateY(1px) scale(0.98);
         }
 
         .menu-icon {
-            font-size: 20px;
-            background: rgba(255,255,255,0.1);
-            width: 36px; height: 36px;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 40px; 
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
+            border-radius: 14px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
         }
 
-        /* Плавное открытие контента (Сетка CSS) */
+        /* Выпадающие секции */
         .content-wrapper {
             width: 100%;
             display: grid;
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-bottom: 8px;
+            margin-bottom: 0px;
         }
 
         .content-wrapper.open {
             grid-template-rows: 1fr;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .content-inner {
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 20px;
             border: 1px solid transparent;
             transition: border 0.4s;
         }
         
         .content-wrapper.open .content-inner {
             border: 1px solid var(--card-border);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .content-box {
-            padding: 16px 20px;
+            padding: 18px 20px;
             line-height: 1.6;
-            font-size: 15px;
+            font-size: 14px;
             color: var(--text-muted);
         }
 
-        .content-box strong { color: var(--text-main); }
-        .content-box ul { margin: 0; padding-left: 20px; }
-        .content-box li { margin-bottom: 12px; }
+        .content-box strong { color: var(--text-main); font-weight: 600; }
+        .content-box ul { margin: 0; padding-left: 18px; }
+        .content-box li { margin-bottom: 10px; }
         .content-box li:last-child { margin-bottom: 0; }
 
         /* Блок фактов */
         .fact-text {
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 16px;
-            min-height: 50px;
-            font-style: italic;
+            min-height: 54px;
+            line-height: 1.5;
+            color: var(--text-main);
         }
 
         .fact-btn {
-            background: var(--accent);
-            color: white;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            color: #000;
             border: none;
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
+            padding: 12px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 15px var(--accent-glow);
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all 0.2s;
         }
 
-        /* НЛО */
+        .fact-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Парящее НЛО */
         #flying-ufo {
             position: fixed;
-            font-size: 36px;
+            font-size: 38px;
             cursor: pointer;
             z-index: 999;
             user-select: none;
             filter: drop-shadow(0 0 15px var(--accent));
+            transition: transform 0.2s;
+        }
+        #flying-ufo:hover {
+            transform: scale(1.2);
         }
 
         @keyframes flyUFO {
-            0% { top: 10vh; left: -50px; transform: rotate(10deg); }
+            0% { top: 10vh; left: -60px; transform: rotate(10deg); }
             25% { top: 60vh; left: 80vw; transform: scaleX(1) rotate(-10deg); }
             50% { top: 20vh; left: 30vw; transform: scaleX(-1) rotate(15deg); }
             75% { top: 80vh; left: 15vw; transform: scaleX(-1) rotate(-15deg); }
@@ -305,20 +372,20 @@
         }
         .flying { animation: flyUFO 15s ease-in-out infinite; }
 
-        /* Модалка промокода (Premium) */
+        /* Модальное окно */
         .promo-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(2, 6, 18, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
         }
 
         .promo-modal.show {
@@ -327,44 +394,55 @@
         }
 
         .promo-content {
-            background: linear-gradient(135deg, rgba(30,27,75,0.9), rgba(15,23,42,0.9));
+            background: var(--bg-main);
             border: 1px solid var(--accent);
-            padding: 30px;
-            border-radius: 24px;
+            padding: 32px 24px;
+            border-radius: 28px;
             text-align: center;
-            width: 85%;
-            max-width: 320px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
-            transform: translateY(20px);
+            width: 88%;
+            max-width: 340px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px var(--accent-glow);
+            transform: translateY(20px) scale(0.95);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .promo-modal.show .promo-content { transform: translateY(0); }
-        .promo-content h3 { margin-top: 0; font-family: 'Montserrat'; font-size: 22px; }
+        .promo-modal.show .promo-content { 
+            transform: translateY(0) scale(1); 
+        }
+
+        .promo-content h3 { 
+            margin: 0; 
+            font-family: 'Unbounded', sans-serif; 
+            font-size: 20px; 
+            color: #fff;
+            text-transform: uppercase;
+        }
         
         .promo-code {
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px dashed var(--accent);
-            color: var(--text-main);
-            font-size: 28px;
+            color: var(--accent);
+            font-family: 'Unbounded', sans-serif;
+            font-size: 24px;
             font-weight: 800;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 16px;
             margin: 20px 0;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
         .promo-content button {
-            background: var(--accent);
-            color: white;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            color: #000;
             border: none;
             width: 100%;
             padding: 14px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 16px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 15px var(--accent-glow);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
     </style>
 </head>
@@ -384,8 +462,9 @@
             Разработка ботов
         </div>
 
-        <h1 class="animate-up delay-1">shvecarsky</h1>
-        <div class="handle animate-up delay-1">@shvecarsky</div>
+        <h1 class="animate-up delay-1">SHVECARSKY</h1>
+        <div class="handle animate-up delay-1">@SHVECARSKY</div>
+        <div class="slogan animate-up delay-1">— надежный, как швейцарские часы</div>
 
         <!-- Обо мне -->
         <div class="animate-up delay-2" style="width: 100%;">
@@ -447,7 +526,7 @@
     <div id="promo-modal" class="promo-modal">
         <div class="promo-content">
             <h3>🛸 НЛО сбито!</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin: 10px 0;">Твой секретный код на скидку 10%:</p>
+            <p style="color: var(--text-muted); font-size: 13px; margin: 12px 0 0 0;">Твой секретный код на скидку 10%:</p>
             <div class="promo-code" id="ufo-code"></div>
             <button onclick="closePromo()">Забрать скидку</button>
         </div>
